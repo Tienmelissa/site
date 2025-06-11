@@ -1,0 +1,1009 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables et base */
+        :root {
+            --primary-color: #d4af37;
+            --primary-dark: #b8941f;
+            --primary-light: #f4e4a6;
+            --secondary-color: #8b4513;
+            --accent-color: #ff6b35;
+            --white: #ffffff;
+            --black: #000000;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --gradient-overlay: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(212,175,55,0.8));
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Playfair Display', serif;
+            --shadow-card: 0 15px 35px rgba(0,0,0,0.1);
+            --shadow-hover: 0 25px 50px rgba(212,175,55,0.25);
+            --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --border-radius: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            line-height: 1.6;
+        }
+
+        
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition-smooth);
+            transform: translateY(0);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .nav-logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 0;
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: var(--transition-fast);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 999;
+            transition: width 0.1s ease;
+        }
+
+
+@media (max-width: 1024px) {
+    :root {
+        --section-padding: 80px 0;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .floating-card {
+        position: static;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        flex-direction: row !important;
+        padding-left: 70px;
+    }
+    
+    .timeline-item::before {
+        left: 30px;
+        transform: translateX(-50%);
+    }
+    
+    .timeline-dot {
+        left: 30px;
+    }
+    
+    .timeline-content {
+        width: 100%;
+    }
+    
+    .timeline-content::before {
+        display: none;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255,255,255,0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transition-smooth);
+                backdrop-filter: blur(20px);
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                cursor: pointer;
+            }
+
+            .nav-toggle span {
+                display: block;
+                width: 25px;
+                height: 3px;
+                background: var(--gray-800);
+                border-radius: 3px;
+                transition: var(--transition-fast);
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+
+            .nav-menu a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                color: var(--gray-800);
+                font-size: 1.1rem;
+                transition: var(--transition-fast);
+            }
+
+            .nav-menu a:hover {
+                color: var(--primary-color);
+                background: rgba(212, 175, 55, 0.05);
+            }
+
+            .nav-menu a.active {
+                color: var(--primary-color);
+                background: rgba(212, 175, 55, 0.1);
+            }
+
+            .sites-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+    
+    .hero-stats {
+        gap: 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .lightbox-prev {
+        margin-left: -25px;
+    }
+    
+    .lightbox-next {
+        margin-right: -25px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --section-padding: 60px 0;
+        --container-padding: 0 15px;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .hero-section {
+        padding: 100px 0 60px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+.gallery-item img,
+.hero-image img {
+    will-change: transform;
+}
+
+.navbar {
+    will-change: transform;
+}
+
+/* Réduction de mouvement pour accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .scroll-indicator {
+        animation: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}
+        /* Section principale */
+        main {
+            padding: 60px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .gallery-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .gallery-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .gallery-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* GALERIE MODERNE REDESIGNÉE */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 0;
+        }
+
+        .gallery-card {
+            position: relative;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-smooth);
+            transform-origin: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .gallery-image-container {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-card:hover .gallery-image {
+            transform: scale(1.15);
+        }
+
+        /* Overlay avec dégradé */
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-overlay);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .gallery-card:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            color: var(--white);
+            transform: translateY(20px);
+            transition: transform var(--transition-smooth);
+        }
+
+        .gallery-card:hover .overlay-content {
+            transform: translateY(0);
+        }
+
+        .overlay-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .overlay-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contenu de la carte */
+        .gallery-content {
+            padding: 25px;
+            background: var(--white);
+        }
+
+        .gallery-title-card {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .gallery-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .gallery-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .gallery-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .gallery-link-arrow {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: transform var(--transition-smooth);
+        }
+
+        .gallery-card:hover .gallery-link-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Animations d'apparition */
+        .gallery-card {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .gallery-card:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-card:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-card:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-card:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-card:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-card:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-card:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-card:nth-child(8) { animation-delay: 0.8s; }
+        .gallery-card:nth-child(9) { animation-delay: 0.9s; }
+        .gallery-card:nth-child(10) { animation-delay: 1.0s; }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #343a40, #212529);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 100px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-light);
+            margin-bottom: 20px;
+            font-family: var(--font-heading);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+            
+            .gallery-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            main {
+                padding: 40px 20px;
+            }
+            
+            .gallery-card:hover {
+                transform: translateY(-10px) scale(1.02);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .gallery-title {
+                font-size: 2rem;
+            }
+            
+            main {
+                padding: 30px 15px;
+            }
+        }
+        .rotating-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: rotate 2s linear infinite;
+}
+
+
+    </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+      <div class="nav-container">
+          <div class="nav-menu" id="navMenu">
+              <a href="INDEX.html" class="nav-link "><i class="fas fa-home"></i> Accueil</a>
+              <a href="patrimoine.html" class="nav-link "><i class="fas fa-landmark"></i> Patrimoine</a>
+              <a href="reserver.html" class="nav-link"><i class="fas fa-bed"></i> Réservation</a>
+              <a href="galerie.html" class="nav-link active"><i class="fas fa-images"></i> Galerie</a>
+          </div>
+          <div class="nav-toggle" id="navToggle">
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+      </div>
+  </nav>
+
+    <main>
+        <div class="gallery-header">
+            <h1 class="gallery-title">Patrimoine Culturel</h1>
+            <p class="gallery-subtitle">Découvrez les trésors architecturaux et culturels du Burkina Faso à travers notre collection de sites exceptionnels</p>
+        </div>
+
+        <section class="gallery">
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="p.jpg" alt="Architecture traditionnelle" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-building overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Architecture Traditionnelle</h3>
+                    <p class="gallery-description">Explorez les techniques ancestrales de construction et l'art décoratif unique de nos bâtiments traditionnels.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Architecture
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="p4.jpeg" alt="Grande Mosquée" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-mosque overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Grande Mosquée</h3>
+                    <p class="gallery-description">Monument emblématique de l'architecture islamique au Burkina Faso, symbole de spiritualité et d'art.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Religieux
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="s.jpg" alt="Culture africaine" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-users overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Culture Africaine</h3>
+                    <p class="gallery-description">Immergez-vous dans la richesse de nos traditions culturelles et de notre patrimoine ancestral.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Culture
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="pat.jpg" alt="Patrimoine historique" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-monument overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Patrimoine Historique</h3>
+                    <p class="gallery-description">Témoins de notre histoire, ces sites racontent l'évolution de notre civilisation à travers les siècles.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Histoire
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="p2.jpg" alt="Art traditionnel" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-palette overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Art Traditionnel</h3>
+                    <p class="gallery-description">Découvrez l'expression artistique locale à travers sculptures, peintures et créations artisanales.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Art
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="paysage.jpeg" alt="Paysages naturels" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-mountain overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Paysages Naturels</h3>
+                    <p class="gallery-description">Explorez la beauté naturelle du Burkina Faso et ses paysages à couper le souffle.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Nature
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="p3.jpg" alt="Culture locale" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-heart overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Culture Locale</h3>
+                    <p class="gallery-description">Vivez l'authenticité de nos communautés et leurs traditions préservées.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Tradition
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="mu2.jpeg" alt="Traditions ancestrales" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-fire overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Traditions Ancestrales</h3>
+                    <p class="gallery-description">Plongez dans l'univers des rites et coutumes transmis de génération en génération.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Spiritualité
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="mau1.jpg" alt="Histoire vivante" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-book overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Histoire Vivante</h3>
+                    <p class="gallery-description">Revivez les grands moments de notre passé à travers des sites chargés d'histoire.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Mémoire
+                        </span>
+                        
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-card">
+                <div class="gallery-image-container">
+                    <img src="moderne.jpg" alt="Architecture moderne" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-city overlay-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-content">
+                    <h3 class="gallery-title-card">Architecture Moderne</h3>
+                    <p class="gallery-description">Découvrez l'évolution architecturale contemporaine qui façonne nos villes aujourd'hui.</p>
+                    <div class="gallery-meta">
+                        <span class="gallery-category">
+                            <i class="fas fa-tag"></i>
+                            Modernité
+                        </span>
+                        
+                    </div>
+                </div>
+                </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>Burkina Tourism</span>
+                    </div>
+                    <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                        <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                        <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="INDEX.html">Accueil</a></li>
+                        <li><a href="patrimoine.html">Patrimoine</a></li>
+                        <li><a href="reserver.html">Réservation</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

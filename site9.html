@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monument du Cinquantenaire</title>
+        <link rel="stylesheet" href="site_style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+                <a href="patrimoine.html" class="nav-link active"><i class="fas fa-landmark"></i> Patrimoine</a>
+                <a href="reserver.html" class="nav-link"><i class="fas fa-bed"></i> Réservation</a>
+                <a href="galerie.html" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Monument du</span>
+                    <span class="title-line highlight">Cinquantenaire</span>
+                </h1>
+                <p class="hero-subtitle">Un symbole emblématique de la ville de Bobo-Dioulasso</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1960</span>
+                        <span class="stat-label">Année de l'indépendance</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50</span>
+                        <span class="stat-label">Années d'histoire</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="mo.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" id="heroImage">
+                    <div class="image-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Découvrir</span>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- Description Section -->
+        <section class="content-section fade-in" data-section="description">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Histoire</span>
+                    <h2 class="section-title">Description du Monument du Cinquantenaire de Bobo-Dioulasso</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <p class="lead-text">Le Monument du Cinquantenaire de Bobo-Dioulasso est un symbole emblématique de la ville, célébrant le cinquantième anniversaire de l'indépendance du Burkina Faso. Situé dans le cœur de la ville, ce monument majestueux est un témoignage de l'histoire récente et de la résilience du pays.</p>
+                        <p>Il attire de nombreux visiteurs et résidents, qui viennent admirer son architecture imposante et réfléchir sur le parcours historique du Burkina Faso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Histoire Section -->
+        <section class="content-section fade-in" data-section="histoire">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Histoire</span>
+                    <h2 class="section-title">Histoire du Monument du Cinquantenaire</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <h2>Contexte de la Construction</h2>
+                        <p>Le monument a été construit pour célébrer les 50 ans de l'indépendance du Burkina Faso, obtenue en 1960. Il représente la liberté, la paix et le progrès de la nation burkinabè au cours des cinq dernières décennies.</p>
+                        <h2>Inauguration</h2>
+                        <p>La cérémonie d'inauguration du monument a eu lieu le 5 août 2010, date anniversaire de l'indépendance. Elle a été marquée par des festivités et des discours de dignitaires locaux et nationaux, soulignant l'importance de ce jalon historique.</p>
+                        <h2>Signification Symbolique</h2>
+                        <p>Le Monument du Cinquantenaire est plus qu'une structure architecturale; il est un symbole de l'unité et de la résilience du peuple burkinabè. Il rappelle les luttes et les accomplissements du pays depuis son indépendance.</p>
+                        <h2>Aujourd'hui</h2>
+                        <p>Aujourd'hui, le Monument du Cinquantenaire est un lieu de mémoire et de réflexion, ainsi qu'une attraction touristique majeure à Bobo-Dioulasso. Il continue de servir de rappel visuel de l'histoire récente et des aspirations futures du Burkina Faso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galerie Section -->
+        <section class="gallery-section fade-in" data-section="galerie">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Découverte</span>
+                    <h2 class="section-title">Galerie du Monument du Cinquantenaire</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="gallery-item" data-src="mo1.jpg">
+                        <img src="mo1.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mo2.jpg">
+                        <img src="mo2.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mo3.jpg">
+                        <img src="mo3.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mo4.jpg">
+                        <img src="mo4.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mo5.jpg">
+                        <img src="mo5.jpg" alt="Monument du Cinquantenaire de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>Burkina Tourism</span>
+                    </div>
+                    <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                        <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                        <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="INDEX.html">Accueil</a></li>
+                        <li><a href="patrimoine.html">Patrimoine</a></li>
+                        <li><a href="reserver.html">Réservation</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

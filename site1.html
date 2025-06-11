@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grande Mosquée de Dioulassoba</title>
+        <link rel="stylesheet" href="site_style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-menu" id="navMenu">
+                <a href="INDEX.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+                <a href="patrimoine.html" class="nav-link active"><i class="fas fa-landmark"></i> Patrimoine</a>
+                <a href="reserver.html" class="nav-link"><i class="fas fa-bed"></i> Réservation</a>
+                <a href="galerie.html" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">La Grande Mosquée</span>
+                    <span class="title-line highlight">de Dioulassoba</span>
+                </h1>
+                <p class="hero-subtitle">Un joyau architectural au cœur de Bobo-Dioulasso</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1936</span>
+                        <span class="stat-label">Année de construction</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">87</span>
+                        <span class="stat-label">Années d'histoire</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="p4.jpeg" alt="La Grande Mosquée de Dioulassoba" id="heroImage">
+                    <div class="image-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Découvrir</span>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- Description Section -->
+        <section class="content-section fade-in" data-section="description">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Architecture</span>
+                    <h2 class="section-title">Description de la Grande Mosquée</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <p class="lead-text">La Grande Mosquée de Dioulassoba, située à Bobo-Dioulasso, est un remarquable exemple d'architecture islamique.</p>
+                        <p>Érigée en 1936, elle est construite en banco, un matériau traditionnel mêlant argile et paille, connu pour sa résistance et ses qualités thermiques. Ce monument impressionne par ses hautes façades et ses minarets élancés, qui semblent se fondre dans le bleu intense du ciel sahélien.</p>
+                        <p>Son design épuré et ses motifs géométriques lui confèrent une allure majestueuse, tandis que ses murs en banco assurent une excellente régulation thermique, préservant une atmosphère agréable malgré la chaleur extérieure.</p>
+                        <div class="highlight-box">
+                            <i class="fas fa-mosque"></i>
+                            <p>Au-delà de son rôle religieux, la mosquée incarne un élément fondamental de l'identité culturelle et spirituelle des musulmans de Bobo-Dioulasso.</p>
+                        </div>
+                    </div>
+                    <div class="content-visual">
+                        <div class="floating-card">
+                            <div class="card-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h4>Architecture Soudano-Sahélienne</h4>
+                            <p>Style traditionnel unique de la région</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Histoire Section -->
+        <section class="content-section history-section fade-in" data-section="histoire">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Heritage</span>
+                    <h2 class="section-title">Histoire de la Grande Mosquée</h2>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item" data-year="1900s">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Origines et Contexte Historique</h3>
+                            <p>La Grande Mosquée de Dioulassoba a été fondée au début du 20ème siècle, pendant la colonisation française. Elle représente un point central dans la vie religieuse et sociale de la ville.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-year="1936">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <h3>Fondation de la Mosquée</h3>
+                            <p>Construite en 1936 avec des matériaux locaux et un style architectural inspiré des traditions islamiques soudano-sahéliennes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-year="1960">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Développement Post-Indépendance</h3>
+                            <p>Après l'indépendance du Burkina Faso, la mosquée a continué à être un centre vital pour la communauté musulmane.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-year="2025">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Aujourd'hui</h3>
+                            <p>La mosquée reste un témoignage précieux de l'histoire et des traditions musulmanes de Bobo-Dioulasso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galerie Section -->
+        <section class="gallery-section fade-in" data-section="galerie">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Découverte</span>
+                    <h2 class="section-title">Galerie de la Grande Mosquée</h2>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="gallery-item" data-src="p4.jpeg">
+                        <img src="p4.jpeg" alt="La Grande Mosquée de Dioulassoba" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="p.jpg">
+                        <img src="p.jpg" alt="La Grande Mosquée de Dioulassoba" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="p2.jpg">
+                        <img src="p2.jpg" alt="La Grande Mosquée de Dioulassoba" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="p3.jpg">
+                        <img src="p3.jpg" alt="La Grande Mosquée de Dioulassoba" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>Burkina Tourism</span>
+                    </div>
+                    <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                        <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                        <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="patrimoine.html">Patrimoine</a></li>
+                        <li><a href="reserver.html">Réservation</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>

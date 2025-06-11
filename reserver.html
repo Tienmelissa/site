@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation d'Hôtel à Bobo-Dioulasso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Variables CSS du design original */
+        :root {
+            --primary-color: #d4af37;
+            --primary-dark: #b8941f;
+            --primary-light: #f4e4a6;
+            --secondary-color: #8b4513;
+            --accent-color: #ff6b35;
+            --white: #ffffff;
+            --black: #000000;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --gradient-hero: linear-gradient(135deg, rgba(212, 175, 55, 0.9), rgba(139, 69, 19, 0.8));
+            --gradient-overlay: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Playfair Display', serif;
+            --section-padding: 100px 0;
+            --container-padding: 0 20px;
+            --border-radius: 15px;
+            --border-radius-lg: 25px;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-hero: 0 30px 100px rgba(212, 175, 55, 0.3);
+            --transition-fast: 0.3s ease;
+            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Reset et base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-100);
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    transition: var(--transition-smooth);
+    transform: translateY(0);
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
+}
+
+.navbar.scrolled {
+    background: rgba(255,255,255,0.98);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+}
+
+.nav-logo i {
+    font-size: 1.5rem;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    font-weight: 500;
+    color: var(--gray-700);
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--primary-color);
+    transition: var(--transition-fast);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    z-index: 999;
+    transition: width 0.1s ease;
+}
+@media (max-width: 1024px) {
+    :root {
+        --section-padding: 80px 0;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .floating-card {
+        position: static;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        flex-direction: row !important;
+        padding-left: 70px;
+    }
+    
+    .timeline-item::before {
+        left: 30px;
+        transform: translateX(-50%);
+    }
+    
+    .timeline-dot {
+        left: 30px;
+    }
+    
+    .timeline-content {
+        width: 100%;
+    }
+    
+    .timeline-content::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: rgba(255,255,255,0.98);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 50px;
+        transition: var(--transition-smooth);
+        backdrop-filter: blur(20px);
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    .hero-stats {
+        gap: 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .lightbox-prev {
+        margin-left: -25px;
+    }
+    
+    .lightbox-next {
+        margin-right: -25px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --section-padding: 60px 0;
+        --container-padding: 0 15px;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .hero-section {
+        padding: 100px 0 60px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+.gallery-item img,
+.hero-image img {
+    will-change: transform;
+}
+
+.navbar {
+    will-change: transform;
+}
+
+/* Réduction de mouvement pour accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .scroll-indicator {
+        animation: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    z-index: 999;
+    transition: width 0.1s ease;
+}
+
+        /* Section principale de réservation */
+        .reservation-section {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--gray-100), var(--white));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reservation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23pattern)"/></svg>');
+            z-index: -1;
+        }
+
+        .reservation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Section des hôtels */
+        .hotels-showcase {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hotels-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .showcase-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--gray-800);
+            margin-bottom: 15px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .showcase-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            font-weight: 300;
+        }
+
+        .hotels-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .hotel-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .hotel-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hotel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .hotel-card:hover .hotel-image img {
+            transform: scale(1.1);
+        }
+
+        .hotel-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .hotel-info {
+            padding: 25px;
+        }
+
+        .hotel-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .hotel-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-600);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .hotel-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .feature i {
+            color: var(--primary-color);
+        }
+
+        .hotel-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price-unit {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+
+        .select-hotel-btn {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .select-hotel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Formulaire de réservation */
+        .reservation-form {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 120px;
+            border: 2px solid var(--primary-color);
+            background: linear-gradient(135deg, var(--white), rgba(212, 175, 55, 0.02));
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gray-800);
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.9rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            background: var(--white);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .reservation-btn {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 18px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .reservation-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+
+        .reservation-btn:hover::before {
+            width: 100%;
+        }
+
+        .reservation-btn::after {
+            content: 'Envoyer';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-weight: 700;
+            transition: var(--transition-smooth);
+        }
+
+        .reservation-btn.loading::after {
+            content: 'Envoi en cours...';
+        }
+
+        .reservation-btn.loading::before {
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .reservation-btn.loading {
+            cursor: not-allowed;
+        }
+
+        .reservation-btn.success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .reservation-btn.success::after {
+            content: 'Envoyé avec succès!';
+        }
+
+        .reservation-btn.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .reservation-btn.error::after {
+            content: 'Erreur lors de l'envoi';
+        }
+
+        .reservation-btn i {
+            margin-left: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .reservation-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Style pour le menu déroulant */
+        .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            background: var(--white);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20fill%3D%27%236c757d%27%20d%3D%27M7%2010l5%205%205-5z%27%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Section résumé */
+        .reservation-summary {
+            background: linear-gradient(135deg, var(--primary-light), rgba(212, 175, 55, 0.1));
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+
+        .reservation-summary.show {
+            display: block;
+            animation: slideInUp 0.5s ease;
+        }
+
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .summary-label {
+            color: var(--gray-600);
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        /* Footer (reprise du CSS original) */
+        .footer {
+            background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+            color: var(--white);
+            padding: 80px 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-light);
+            margin-bottom: 25px;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-logo i {
+            font-size: 1.8rem;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            transition: var(--transition-fast);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .contact-info i {
+            color: var(--primary-light);
+            width: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 0;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .reservation-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .reservation-form {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .reservation-section {
+                padding: 100px 0 60px;
+            }
+            
+            .hotels-showcase,
+            .reservation-form {
+                padding: 25px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .showcase-title {
+                font-size: 2rem;
+            }
+        }
+        .rotating {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.form-input.error {
+    border-color: var(--error-color) !important;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.submit-btn:disabled {
+    background: var(--gray-400);
+    cursor: not-allowed;
+}
+
+.submit-btn i {
+    margin-right: 8px;
+}
+    </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="nav-menu" id="navMenu">
+            <a href="INDEX.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+            <a href="patrimoine.html" class="nav-link "><i class="fas fa-landmark"></i> Patrimoine</a>
+            <a href="reserver.html" class="nav-link active"><i class="fas fa-bed"></i> Réservation</a>
+            <a href="galerie.html" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
+        </div>
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+    <!-- Section principale de réservation -->
+    <section class="reservation-section">
+        <div class="reservation-container">
+            <!-- Showcase des hôtels -->
+            <div class="hotels-showcase">
+                <div class="showcase-header">
+                    <h1 class="showcase-title">Nos Hôtels Premium</h1>
+                    <p class="showcase-subtitle">Découvrez l'hospitalité burkinabé dans nos établissements d'exception</p>
+                </div>
+                
+                <div class="hotels-grid">
+                    <div class="hotel-card" onclick="selectHotel('Iba Hôtel', '45000')">
+                        <div class="hotel-image">
+                            <img src="ih.jpeg" alt="Iba Hôtel">
+                            <div class="hotel-badge">⭐ Premium</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Iba Hôtel</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Centre-ville, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-parking"></i>
+                                    Parking
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    45,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Hôtel l\'Auberge', '40000')">
+                        <div class="hotel-image">
+                            <img src="au.jpg" alt="Hôtel l\'Auberge">
+                            <div class="hotel-badge">⭐ Confort</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Hôtel l\'Auberge</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Quartier Moderne, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Gym
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    40,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Hôtel Wifama', '50000')">
+                        <div class="hotel-image">
+                            <img src="wi.jpeg" alt="Hôtel Wifama">
+                            <div class="hotel-badge">⭐ Luxe</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Hôtel Wifama</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Centre-ville, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-parking"></i>
+                                    Parking
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    50,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Pacific Hôtel', '48000')">
+                        <div class="hotel-image">
+                            <img src="pacific.jpg" alt="Pacific Hôtel">
+                            <div class="hotel-badge">⭐ Premium</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Pacific Hôtel</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Quartier Moderne, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Gym
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    48,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Villa Rose', '38000')">
+                        <div class="hotel-image">
+                            <img src="vi.jpg" alt="Villa Rose">
+                            <div class="hotel-badge">⭐ Confort</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Villa Rose</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Centre-ville, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-parking"></i>
+                                    Parking
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    38,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Les Deux Palmiers', '42000')">
+                        <div class="hotel-image">
+                            <img src="pal.jpg" alt="Les Deux Palmiers">
+                            <div class="hotel-badge">⭐ Confort</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Les Deux Palmiers</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Quartier Moderne, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Gym
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    42,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Oasis Lawafossi', '47000')">
+                        <div class="hotel-image">
+                            <img src="o.jpg" alt="Oasis Lawafossi">
+                            <div class="hotel-badge">⭐ Premium</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Oasis Lawafossi</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Centre-ville, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-parking"></i>
+                                    Parking
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    47,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Ran Hôtel Somketa', '52000')">
+                        <div class="hotel-image">
+                            <img src="ra.jpg" alt="Ran Hôtel Somketa">
+                            <div class="hotel-badge">⭐ Luxe</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Ran Hôtel Somketa</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Quartier Moderne, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Gym
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    52,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hotel-card" onclick="selectHotel('Hôtel Sissiman', '35000')">
+                        <div class="hotel-image">
+                            <img src="Hôtel Sissiman.jpg" alt="Hôtel Sissiman">
+                            <div class="hotel-badge">⭐ Confort</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Hôtel Sissiman</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Secteur 7, Bobo-Dioulasso
+                            </div>
+                            <div class="hotel-features">
+                                <div class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    WiFi
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-utensils"></i>
+                                    Restaurant
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Minibar
+                                </div>
+                            </div>
+                            <div class="hotel-price">
+                                <div class="price">
+                                    35,000 <span class="price-unit">FCFA/nuit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire de réservation -->
+            <div class="reservation-form">
+                <div class="form-header">
+                    <h2 class="form-title">
+                        <i class="fas fa-calendar-check"></i>
+                        Réservation
+                    </h2>
+                    <p class="form-subtitle">Complétez vos informations pour finaliser votre réservation</p>
+                </div>
+
+                <form id="reservationForm">
+                    <div class="form-group">
+                        <label class="form-label" for="hotel">
+                            <i class="fas fa-building"></i>
+                            Hôtel
+                        </label>
+                        <select class="form-select" id="hotel" name="hotel" required>
+                            <option value="">Choisissez un hôtel</option>
+                            <option value="Iba Hôtel">Iba Hôtel - 45,000 FCFA/nuit</option>
+                            <option value="Hôtel l'Auberge">Hôtel l'Auberge - 40,000 FCFA/nuit</option>
+                            <option value="Hôtel Wifama">Hôtel Wifama - 50,000 FCFA/nuit</option>
+                            <option value="Pacific Hôtel">Pacific Hôtel - 48,000 FCFA/nuit</option>
+                            <option value="Villa Rose">Villa Rose - 38,000 FCFA/nuit</option>
+                            <option value="Les Deux Palmiers">Les Deux Palmiers - 42,000 FCFA/nuit</option>
+                            <option value="Oasis Lawafossi">Oasis Lawafossi - 47,000 FCFA/nuit</option>
+                            <option value="Ran Hôtel Somketa">Ran Hôtel Somketa - 52,000 FCFA/nuit</option>
+                        </select>
+                        <input type="hidden" id="prix_hotel" value="">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="nom">
+                                <i class="fas fa-user"></i>
+                                Nom
+                            </label>
+                            <input type="text" id="nom" name="nom" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="prenom">
+                                <i class="fas fa-user"></i>
+                                Prénom
+                            </label>
+                            <input type="text" id="prenom" name="prenom" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="telephone">
+                            <i class="fas fa-phone"></i>
+                            Numéro de téléphone
+                        </label>
+                        <input type="tel" id="telephone" name="telephone" class="form-input" placeholder="+226 XX XX XX XX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="adresse">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Adresse
+                        </label>
+                        <input type="text" id="adresse" name="adresse" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="date_arrivee">
+                                <i class="fas fa-calendar-alt"></i>
+                                Date d'arrivée
+                            </label>
+                            <input type="date" id="date_arrivee" name="date_arrivee" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="date_sortie">
+                                <i class="fas fa-calendar-alt"></i>
+                                Date de sortie
+                            </label>
+                            <input type="date" id="date_sortie" name="date_sortie" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="nombre_personnes">
+                            <i class="fas fa-users"></i>
+                            Nombre de personnes
+                        </label>
+                        <input type="number" id="nombre_personnes" name="nombre_personnes" class="form-input" min="1" max="10" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="mode_paiement">
+                            <i class="fas fa-credit-card"></i>
+                            Mode de paiement
+                        </label>
+                        <select class="form-select" id="mode_paiement" required>
+                            <option value="">Choisissez un mode de paiement</option>
+                            <option value="carte">Carte bancaire</option>
+                            <option value="mobile">Mobile money</option>
+                            <option value="espece">Espèces à l'hôtel</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="message">
+                            <i class="fas fa-comment"></i>
+                            Message
+                        </label>
+                        <textarea id="message" name="message" class="form-input" rows="4" placeholder="Votre message ici..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="submitBtn" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer la réservation
+                        </button>
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+    </section>
+    <!-- Notification centrale -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <div class="notification-icon"></div>
+            <div class="notification-message"></div>
+        </div>
+    </div>
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img src="" alt="" class="lightbox-image">
+            <div class="lightbox-nav">
+                <span class="lightbox-prev">&lt;</span>
+                <span class="lightbox-next">&gt;</span>
+            </div>
+        </div>
+    </div>
+</div>  
+</body>
+<!-- Footer -->
+  <footer class="footer">
+      <div class="footer-container">
+          <div class="footer-content">
+              <div class="footer-section">
+                  <div class="footer-logo">
+                      <i class="fas fa-mosque"></i>
+                      <span>Burkina Tourism</span>
+                  </div>
+                  <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                  <div class="social-links">
+                      <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                      <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+              <div class="footer-section">
+                  <h3>Contact</h3>
+                  <div class="contact-info">
+                      <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                      <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                      <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                      <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                  </div>
+              </div>
+              <div class="footer-section">
+                  <h3>Navigation</h3>
+                  <ul class="footer-links">
+                      <li><a href="INDEX.html">Accueil</a></li>
+                      <li><a href="patrimoine.html">Patrimoine</a></li>
+                      <li><a href="reserver.html">Réservation</a></li>
+                      <li><a href="galerie.html">Galerie</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+          </div>
+      </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+      <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</div>  
+</body>
+</html>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupération des éléments de date
+    const dateArrivee = document.getElementById('date_arrivee');
+    const dateSortie = document.getElementById('date_sortie');
+    
+    // Définir la date minimale (aujourd'hui)
+    const today = new Date().toISOString().split('T')[0];
+    dateArrivee.min = today;
+    dateSortie.min = today;
+    
+    // Validation lors du changement de date
+    dateArrivee.addEventListener('change', function() {
+        if (dateArrivee.value) {
+            dateSortie.min = dateArrivee.value;
+            
+            // Si la date de sortie est antérieure à la nouvelle date d'arrivée
+            if (dateSortie.value && dateSortie.value < dateArrivee.value) {
+                dateSortie.value = '';
+                showError(dateSortie, "La date de sortie doit être après la date d'arrivée");
+            }
+        }
+    });
+    
+    dateSortie.addEventListener('change', function() {
+        if (dateArrivee.value && dateSortie.value && dateSortie.value < dateArrivee.value) {
+            showError(dateSortie, "La date de sortie doit être après la date d'arrivée");
+        } else {
+            clearError(dateSortie);
+        }
+    });
+    
+    function showError(input, message) {
+        const formGroup = input.closest('.form-group');
+        let errorElement = formGroup.querySelector('.error-message');
+        
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            formGroup.appendChild(errorElement);
+        }
+        
+        errorElement.textContent = message;
+        input.style.borderColor = 'var(--error-color)';
+    }
+    
+    function clearError(input) {
+        const formGroup = input.closest('.form-group');
+        const errorElement = formGroup.querySelector('.error-message');
+        
+        if (errorElement) {
+            errorElement.remove();
+        }
+        
+        input.style.borderColor = '';
+    }
+    
+    // Fonction pour sélectionner un hôtel
+    window.selectHotel = function(hotelName, price) {
+        const hotelSelect = document.getElementById('hotel');
+        const prixInput = document.getElementById('prix_hotel');
+        
+        hotelSelect.value = hotelName;
+        prixInput.value = price;
+    };
+    
+    // Validation du formulaire
+    document.getElementById('reservationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Vérification des dates
+        if (dateArrivee.value && dateSortie.value && dateSortie.value <= dateArrivee.value) {
+            showError(dateSortie, "La date de sortie doit être après la date d'arrivée");
+            return;
+        }
+        
+        // Si tout est valide, soumettre le formulaire
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+        
+        // Simulation d'envoi (remplacer par un vrai appel AJAX)
+        setTimeout(function() {
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Réservation envoyée!';
+            submitBtn.style.backgroundColor = 'var(--success-color)';
+            
+            // Réinitialiser après 3 secondes
+            setTimeout(function() {
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer la réservation';
+                submitBtn.style.backgroundColor = '';
+                submitBtn.disabled = false;
+                document.getElementById('reservationForm').reset();
+            }, 3000);
+        }, 2000);
+    });
+});
+</script>

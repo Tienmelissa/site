@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Maison de la Culture</title>
+        <link rel="stylesheet" href="site_style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+<body>
+   
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+                <a href="patrimoine.html" class="nav-link active"><i class="fas fa-landmark"></i> Patrimoine</a>
+                <a href="reserver.html" class="nav-link"><i class="fas fa-bed"></i> Réservation</a>
+                <a href="galerie.html" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Maison de la Culture</span>
+                    <span class="title-line highlight">de Bobo-Dioulasso</span>
+                </h1>
+                <p class="hero-subtitle">Un centre culturel et artistique emblématique situé dans la deuxième plus grande ville du Burkina Faso</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1962</span>
+                        <span class="stat-label">Année de construction</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">60</span>
+                        <span class="stat-label">Années d'histoire</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    <img src="mai.jpg" alt="Maison de la Culture de Bobo-Dioulasso" id="heroImage">
+                    <div class="image-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Découvrir</span>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- Description Section -->
+        <section class="content-section fade-in" data-section="description">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Histoire</span>
+                    <h2 class="section-title">Description de la Maison de la Culture de Bobo-Dioulasso</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="content-grid">
+                    <div class="content-text">
+                        <p class="lead-text">La Maison de la Culture de Bobo-Dioulasso est un centre culturel et artistique emblématique situé dans la deuxième plus grande ville du Burkina Faso. Inaugurée en 1962, cette institution joue un rôle clé dans la promotion des arts, de la culture et des traditions locales.</p>
+                        <p>Conçue pour servir de lieu de rencontre et de célébration pour la communauté, la Maison de la Culture est un point névralgique pour les événements culturels, les spectacles, et les expositions.</p>
+                        <p>Le bâtiment de la Maison de la Culture est un exemple frappant d'architecture moderne intégrée dans un contexte culturel traditionnel. Il se caractérise par ses espaces polyvalents, adaptés à une variété d'activités allant des spectacles de danse aux conférences et expositions artistiques.</p>
+                        <div class="highlight-box">
+                            <i class="fas fa-monument"></i>
+                            <p>La Maison de la Culture est un symbole important de l'histoire culturelle du Burkina Faso.</p>
+                        </div>
+                    </div>
+                    <div class="content-visual">
+                        <div class="floating-card">
+                            <div class="card-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h4>Centre Culturel</h4>
+                            <p>Un lieu de mémoire et d'éducation culturelle</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Histoire Section -->
+        <section class="content-section history-section fade-in" data-section="histoire">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Heritage</span>
+                    <h2 class="section-title">Histoire de la Maison de la Culture de Bobo-Dioulasso</h2>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item" data-year="1960">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Origines et Contexte Historique</h3>
+                            <p>Le Burkina Faso accède à l'indépendance, marquant le début d'une nouvelle ère culturelle.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-year="1962">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <h3>Fondation de la Maison de la Culture</h3>
+                            <p>La Maison de la Culture est construite pour promouvoir les arts et la culture au Burkina Faso.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-year="2025">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Aujourd'hui</h3>
+                            <p>La Maison de la Culture reste un symbole important de l'histoire culturelle du Burkina Faso et un lieu de visite touristique.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galerie Section -->
+        <section class="gallery-section fade-in" data-section="galerie">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Découverte</span>
+                    <h2 class="section-title">Galerie de la Maison de la Culture de Bobo-Dioulasso</h2>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="gallery-item" data-src="mai1.jpg">
+                        <img src="mai1.jpg" alt="Maison de la Culture de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mai2.jpg">
+                        <img src="mai2.jpg" alt="Maison de la Culture de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mai3.jpg">
+                        <img src="mai3.jpg" alt="Maison de la Culture de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mai4.jpg">
+                        <img src="mai4.jpg" alt="Maison de la Culture de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-src="mai5.jpg">
+                        <img src="mai5.jpg" alt="Maison de la Culture de Bobo-Dioulasso" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-nav">
+                <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-mosque"></i>
+                        <span>Burkina Tourism</span>
+                    </div>
+                    <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                        <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                        <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="INDEX.html">Accueil</a></li>
+                        <li><a href="patrimoine.html">Patrimoine</a></li>
+                        <li><a href="reserver.html">Réservation</a></li>
+                        <li><a href="galerie.html">Galerie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

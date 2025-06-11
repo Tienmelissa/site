@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobo-Dioulasso - Sites Touristiques</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #d4af37;
+            --primary-dark: #b8941f;
+            --primary-light: #f4e4a6;
+            --secondary-color: #8b4513;
+            --accent-color: #ff6b35;
+            
+            --white: #ffffff;
+            --black: #000000;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --gradient-hero: linear-gradient(135deg, rgba(212, 175, 55, 0.9), rgba(139, 69, 19, 0.8));
+            --gradient-overlay: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Playfair Display', serif;
+            
+            --section-padding: 100px 0;
+            --container-padding: 0 20px;
+            --border-radius: 15px;
+            --border-radius-lg: 25px;
+            
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-hero: 0 30px 100px rgba(212, 175, 55, 0.3);
+            
+            --transition-fast: 0.3s ease;
+            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-100);
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-screen p {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition-smooth);
+            transform: translateY(0);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .nav-logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 0;
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: var(--transition-fast);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 999;
+            transition: width 0.1s ease;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero);
+            color: var(--white);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="90" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-description {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        /* Sites Section */
+        .sites-section {
+            padding: var(--section-padding);
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--gray-800);
+            margin-bottom: 20px;
+        }
+
+        .section-line {
+            width: 100px;
+            height: 3px;
+            background: var(--gradient-primary);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Sites Grid */
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .site-card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .site-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .site-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .site-card:hover .site-image img {
+            transform: scale(1.1);
+        }
+
+        .site-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-overlay);
+            opacity: 0;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .site-card:hover .site-overlay {
+            opacity: 1;
+        }
+
+        .visit-icon {
+            color: var(--white);
+            font-size: 2rem;
+            transform: scale(0.5);
+            transition: var(--transition-bounce);
+        }
+
+        .site-card:hover .visit-icon {
+            transform: scale(1);
+        }
+
+        .site-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .site-description {
+            color: var(--gray-700);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .site-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-top: 20px;
+            transition: var(--transition-fast);
+        }
+
+        .site-link:hover {
+            color: var(--primary-dark);
+            gap: 12px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+            color: var(--white);
+            padding: 80px 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-light);
+            margin-bottom: 25px;
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-logo i {
+            font-size: 1.8rem;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            transition: var(--transition-fast);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .contact-info i {
+            color: var(--primary-light);
+            width: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 0;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transform: translateY(100px);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .back-to-top.visible {
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255,255,255,0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transition-smooth);
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+
+            .sites-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --section-padding: 60px 0;
+                --container-padding: 0 15px;
+            }
+
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .hero-section {
+                padding: 100px 0 60px;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        .rotating-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: rotate 2s linear infinite;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+          <div class="nav-menu" id="navMenu">
+              <a href="INDEX.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+              <a href="patrimoine.html" class="nav-link active"><i class="fas fa-landmark"></i> Patrimoine</a>
+              <a href="reserver.html" class="nav-link"><i class="fas fa-bed"></i> Réservation</a>
+              <a href="galerie.html" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
+          </div>
+          <div class="nav-toggle" id="navToggle">
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+      </div>
+  </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Bienvenue à Bobo-Dioulasso</h1>
+                <p class="hero-subtitle">Découvrez le patrimoine culturel exceptionnel du Burkina Faso</p>
+                <p class="hero-description">
+                    Bobo-Dioulasso, ville historique et culturelle du Burkina Faso, vous accueille avec ses nombreux sites touristiques et son patrimoine riche. Explorez les trésors architecturaux, les traditions ancestrales et la beauté naturelle de cette destination unique.
+                </p>
+            </div>
+        </section>
+
+        <!-- Sites Section -->
+        <section class="sites-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Sites Touristiques</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="sites-grid">
+                    <!-- Site 1: Mosquée -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="p4.jpeg" alt="Mosquée de Bobo-Dioulasso">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Mosquée de Bobo-Dioulasso</h3>
+                            <p class="site-description">
+                                La mosquée de Bobo-Dioulasso est l'un des monuments les plus emblématiques de la ville. Ce chef-d'œuvre architectural en terre témoigne du riche patrimoine islamique de la région.
+                            </p>
+                            <a href="site1.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 2: maison de la culture -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="maison_culture.jpeg" alt="Aéroport de Bobo-Dioulasso">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Maison de la culture</h3>
+                            <p class="site-description">
+                                La Maison de la Culture de Bobo-Dioulasso est un haut lieu artistique et culturel du Burkina Faso, dédié à la promotion des arts, de la musique et du patrimoine local.                            </p>
+                            <a href="site6.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 3: Musée Senoufo -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="sen1.jpeg" alt="Musée Senoufo">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Musée Senoufo</h3>
+                            <p class="site-description">
+                                Le Musée Sénoufo de Bobo-Dioulasso est un espace dédié à la sauvegarde du patrimoine culturel sénoufo. Il expose sculptures, masques et instruments de musique traditionnels.
+                            </p>
+                            <a href="site3.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 4: La Guinguette -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="gui6.jpeg" alt="La Guinguette">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Mare aux Poissons Sacrés</h3>
+                            <p class="site-description">
+                                La Mare aux Poissons Sacrés de Bobo-Dioulasso est un site mystique et culturel où vivent des silures sacrés, vénérés par la population locale dans le respect des traditions animistes.                            </p>
+                            <a href="site8.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 5: Musée Sogossira Sanon -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="mu2.jpeg" alt="Musée Sogossira Sanon">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Musée Communal Sogossira Sanon</h3>
+                            <p class="site-description">
+                                Le Musée Sogossira Sanon est un centre culturel important dédié à la préservation et à la présentation des traditions et de l'histoire du Burkina Faso.
+                            </p>
+                            <a href="site2.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 6: Marché Central -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="cathedrale.jpg" alt="Marché Central">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Cathedrale</h3>
+                            <p class="site-description">
+                                La Cathédrale de Bobo-Dioulasso est un édifice religieux emblématique mêlant architecture traditionnelle et influence coloniale, symbole de la foi chrétienne dans la ville.                            </p>
+                            <a href="site7.html" class="site-link">
+                                Découvrir <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Site 7: Monument du Cinquantenaire -->
+                    <article class="site-card fade-in">
+                        <div class="site-image">
+                            <img src="mo.jpg" alt="Monument du Cinquantenaire">
+                            <div class="site-overlay">
+                                <i class="fas fa-eye visit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="site-content">
+                            <h3 class="site-title">Monument du Cinquantenaire</h3>
+                            <p class="site-description">
+                                Le Monument du Cinquantenaire de Bobo-Dioulasso est un symbole emblématique célébrant le cinquantième anniversaire de l'indépendance du Burkina Faso.
+                            </p>
+                            <a href="site9.html" class="site-link">
+                              Découvrir <i class="fas fa-arrow-right"></i>
+                          </a>
+                        </div>
+                    </article>
+
+
+                    <article class="site-card fade-in">
+                      <div class="site-image">
+                          <img src="mau.jpg" alt="Le Mausolée Guimbi Ouattara">
+                          <div class="site-overlay">
+                              <i class="fas fa-eye visit-icon"></i>
+                          </div>
+                      </div>
+                      <div class="site-content">
+                          <h3 class="site-title">Le Mausolée Guimbi Ouattara</h3>
+                          <p class="site-description">
+                            Le Mausolée Guimbi Ouattara est un site historique dédié à une héroïne de la résistance contre la colonisation.
+                          </p>
+                          <a href="site10.html" class="site-link">
+                            Découvrir <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </div>
+                   </article>
+
+
+                    <article class="site-card fade-in">
+                      <div class="site-image">
+                          <img src="gui6.jpeg" alt="Le Village de Koumi">
+                          <div class="site-overlay">
+                              <i class="fas fa-eye visit-icon"></i>
+                          </div>
+                      </div>
+                      <div class="site-content">
+                          <h3 class="site-title">Guinguette de Bobo-Dioulasso</h3>
+                          <p class="site-description">
+                            La Guinguette est un site naturel situé à une vingtaine de kilomètres de Bobo-Dioulasso, dans la forêt classée du Kou. C’est un espace paisible au bord de la rivière de Kou, connu pour ses sources d’eau, sa végétation luxuriante, et ses airs de détente. On y trouve aussi un petit aménagement touristique (paillote, bancs, snack…)                          
+                           </p> 
+                            <a href="site4.html" class="site-link">
+                            Découvrir <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </div>
+                    </article>
+
+
+                    <article class="site-card fade-in">
+                      <div class="site-image">
+                          <img src="ae1.jpeg" alt="La Forêt Classée du Kou">
+                          <div class="site-overlay">
+                              <i class="fas fa-eye visit-icon"></i>
+                          </div>
+                      </div>
+                      <div class="site-content">
+                          <h3 class="site-title">Aéroport international de Bobo-Dioulasso</h3>
+                          <p class="site-description">
+                            L’Aéroport international de Bobo-Dioulasso est une infrastructure moderne reliant la ville au reste du monde, facilitant les échanges économiques, culturels et touristiques.
+                            <a href="site11.html" class="site-link">
+                            Découvrir <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img src="" alt="" id="lightboxImage">
+        <div class="lightbox-nav">
+            <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div> -->
+</div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-mosque"></i>
+                    <span>Burkina Tourism</span>
+                </div>
+                <p>Découvrez les merveilles du patrimoine burkinabé</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> contact@villedetourisme.bf</p>
+                    <p><i class="fas fa-phone"></i> +226 55-13-15-50</p>
+                    <p><i class="fas fa-phone"></i> +226 67-34-05-82</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Bobo-Dioulasso, Burkina Faso</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="INDEX.html">Accueil</a></li>
+                    <li><a href="patrimoine.html">Patrimoine</a></li>
+                    <li><a href="reserver.html">Réservation</a></li>
+                    <li><a href="galerie.html">Galerie</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Juin 2025 Ville Touristique - Projet académique réalisé par Jeannine SOME & Melissa TIENDREBEOGO.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script src="script.js"></script>
+</body>
+</html>

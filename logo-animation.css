@@ -1,0 +1,14 @@
+.rotating-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: rotate 8s linear infinite;
+    transition: transform 0.3s ease;
+}
+
+/* Animation plus fluide au hover */
+.rotating-logo:hover {
+    animation: rotate 2s linear infinite;
+    transform: scale(1.1);
+}
